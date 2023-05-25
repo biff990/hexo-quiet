@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>如何在Vultr上一键脚本搭建ShadowSocks/搭建SSR教程实现科学上网？ | 105s.top-个人博客</title><meta name="author" content="admin"><meta name="copyright" content="admin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本教程是利用Vultr的服务器来进行SS的搭建操作，国外VPS服务商除了搬瓦工可以在VPS管理后台进行一键搭建SS外，其它的商家还没有发现有这个额外的功能，都需要我们手动执行命令（代码）来进行操作。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在Vultr上一键脚本搭建ShadowSocks&#x2F;搭建SSR教程实现科学上网？">
+<meta property="og:url" content="https://105s.top/posts/66426e16.html">
+<meta property="og:site_name" content="105s.top-个人博客">
+<meta property="og:description" content="本教程是利用Vultr的服务器来进行SS的搭建操作，国外VPS服务商除了搬瓦工可以在VPS管理后台进行一键搭建SS外，其它的商家还没有发现有这个额外的功能，都需要我们手动执行命令（代码）来进行操作。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/05/25/5ZREoAKglSnNkC3.png">
+<meta property="article:published_time" content="2023-05-24T23:48:04.724Z">
+<meta property="article:modified_time" content="2023-05-25T00:26:08.544Z">
+<meta property="article:author" content="admin">
+<meta property="article:tag" content="Vultr,ShadowSocks教程,梯子搭建脚本,ssr搭建,科学上网">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/05/25/5ZREoAKglSnNkC3.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://105s.top/posts/66426e16.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c3414933aaf7e8568b64d008dcf5eca2";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '如何在Vultr上一键脚本搭建ShadowSocks/搭建SSR教程实现科学上网？',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-05-25 08:26:08'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="//at.alicdn.com/t/c/font_4083372_b79hftqgs3w.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw iconfont icon-shouye"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw iconfont icon-guidangxiangmu"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw iconfont icon-24gl-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw iconfont icon-wenjian"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw iconfont icon-yingyinyule"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw iconfont fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw iconfont fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw iconfont icon-guanyuwomen"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw iconfont icon-youqinglianjie"></i><span> 友情链接</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="105s.top-个人博客"><span class="site-name">105s.top-个人博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw iconfont icon-shouye"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw iconfont icon-guidangxiangmu"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw iconfont icon-24gl-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw iconfont icon-wenjian"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw iconfont icon-yingyinyule"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw iconfont fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw iconfont fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw iconfont icon-guanyuwomen"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw iconfont icon-youqinglianjie"></i><span> 友情链接</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">如何在Vultr上一键脚本搭建ShadowSocks/搭建SSR教程实现科学上网？</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-05-24T23:48:04.724Z" title="发表于 2023-05-25 07:48:04">2023-05-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-05-25T00:26:08.544Z" title="更新于 2023-05-25 08:26:08">2023-05-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/vps/">vps</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="如何在Vultr上一键脚本搭建ShadowSocks/搭建SSR教程实现科学上网？"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>本教程是利用Vultr的服务器来进行SS的搭建操作，国外VPS服务商除了搬瓦工可以在VPS管理后台进行一键搭建SS外，其它的商家还没有发现有这个额外的功能，都需要我们手动执行命令（代码）来进行操作。</p>
+<p>使用命令（代码）搭建SS，对于有点linux基础知识的网友来说并不是什么难事，但是对于不懂代码的网友可能觉得这个我不行，我看不懂，看这个就好比看天书一般。</p>
+<p>没关系，小编自己写的一键搭建shadowsocks&#x2F;shadowsocksR的shell脚本，一键脚本适用Vultr的和搬瓦工所有机型（CentOS、Ubuntu、Debian），搭建的ss服务器支持所有客户端类型，本机你是iOS，Android，Windows，Mac，或者是Linux，ss&#x2F;ssr脚本都适用。一键脚本搭建SS&#x2F;SSR服务器，绝对没有任何问题，任何问题欢迎留言。一键脚本内容包括一键搭建shadowsocks&#x2F;一键搭建shadowsocksR+一键开启bbr加速，适合新手小白。纯新手也可以Vultr搭建SS。</p>
+<h2 id="第一步、注册Vultr并购买服务器"><a href="#第一步、注册Vultr并购买服务器" class="headerlink" title="第一步、注册Vultr并购买服务器"></a>第一步、注册Vultr并购买服务器</h2><p>**<br>1、首先去Vultr官网：<a target="_blank" rel="noopener" href="https://www.vultr.com/?ref=9439551">https://www.vultr.com</a>，注册一个账号，链接打开的页面如下所示：</p>
+<p><img src="https://s2.loli.net/2023/05/25/5ZREoAKglSnNkC3.png"></p>
+<p>2、Vultr充值<a target="_blank" rel="noopener" href="https://www.vultr.com/?ref=9439551"><strong>Vultr 注册：新账号充值 10 美金、附送100 美金活动</strong></a></p>
+<p>注册并验证邮箱后，进入Vultr后台，在Billing标签下面选择利用支付宝（Alipay）进行充值：</p>
+<p><img src="https://s2.loli.net/2023/05/25/qvDrQwPAZtcyhLu.png"></p>
+<p>3、Vultr新建实例<br>充值完毕后，点击页面右上角的蓝色+号按钮，进入Deploy页面，选择你要新建的服务器的配置，之后点击Deploy即可，其中Server Location表示的是服务器节点位置，建议选择日本&#x2F;洛杉矶；Server Type是服务器系统，建议选择64 bit OS下的Ubuntu 16.04，Ubuntu对新手比较友好；Server Size就是服务器配置大小，从$2.5依次提升（$2.5的只有IPv6，不建议选择，少部分区域有$3.5的）；其他的配置可以默认，之后点击Deploy Now就可以新建完成了。<img src="https://s2.loli.net/2023/05/25/Zv9FNHWDeMknlrT.png"></p>
+<p><img src="https://s2.loli.net/2023/05/25/VQmyEl29abzZg13.png" alt="****"></p>
+<p>4、Vultr查看VPS信息<br>服务器新建完成后，等待几分钟即可在Servers标签下看到你自己服务器的信息了，具体位置在Servers-&gt;Instances，点击选择你新建的实例：查看服务器ip及密码<img src="https://s2.loli.net/2023/05/25/PYb4E5nlNfK2QJ9.png" alt="*记录 IP、用户名、密码*"></p>
+<h2 id="第二步、一键脚本搭建ss-x2F-ssr"><a href="#第二步、一键脚本搭建ss-x2F-ssr" class="headerlink" title="第二步、一键脚本搭建ss&#x2F;ssr"></a>第二步、一键脚本搭建ss&#x2F;ssr</h2><p>**<br>一键脚本搭建ss&#x2F;ssr支持系统版本脚本系统支持：CentOS 6+，Debian 7+，Ubuntu 12+</p>
+<p>1、下载并安装 FinalShell软件（Windows版）点击下面的链接下载 FinalShell软件并安装。连上购买的VPS后，你将看到如下图所示的界面：</p>
+<p><a target="_blank" rel="noopener" href="https://u.pcloud.link/publink/show?code=XZWgDMVZuqnAYj9ytkRMceYwUJg6MbjA2T8X">点击下载并FinalShell软件</a></p>
+<p><img src="https://s2.loli.net/2023/05/25/xUH4acs2PCbEDkV.webp" alt="*通过 FinalShell 工具链接服务器*"></p>
+<p>2、第一次连接服务器会提示保存ssh密钥，点击接受并保存。如果提示需要输入用户名（登录名），那么请输入root！</p>
+<p><img src="https://s2.loli.net/2023/05/25/9dMDPxROZkE15aC.png"></p>
+<p>然后从vultr后台复制出服务器密码，点击确定按钮后服务器会自动连接。<img src="https://s2.loli.net/2023/05/25/4tv5YoPxW3eZNAr.png"></p>
+<p>如红框中所示，root@vult（root@ubuntu）说明已经连接成功了，之后你只需要在绿色光标处直接复制以下代码并回车就可以了（直接复制即可，如每段代码下方截图中所示）。<br>3、输入下方代码，回车，开始一键搭建ssr脚本文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install shadowsocks-libev</span><br></pre></td></tr></table></figure>
+
+<p>期间会提示问题是否继续，直接输入 “y” 继续即可，我就不截图演示了。大概 30 秒就会运行完毕。完毕后输入下方指令查看运行状态：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status shadowsocks-libev.service</span><br></pre></td></tr></table></figure>
+
+<p>出现绿色的 Running（运行中）标识，即代表运行成功：<img src="https://s2.loli.net/2023/05/25/IYwB69HGN2St8fT.png"></p>
+<p>通过 systemctl status 查询运行状态：运行成功</p>
+<p><em>大家看，选择 Ubuntu 环境的好处凸显出来了。源中自带 ss 编译文件。新手非常友好。</em></p>
+<p>同时通过上图也可以看到，SS 的配置文件 <em>config.json</em> 文件是安装在：<em>etc&#x2F;shadowsocks-libev&#x2F;</em> 中的。</p>
+<p>你可以在 FinallShell 下方，右击刷新，并在 <em>etc&#x2F;shadowsocks-libev&#x2F;</em> 目录中找到 <em>config.json</em> 文件：</p>
+<p><img src="https://s2.loli.net/2023/05/25/MUQgzmN9iPIbOpt.png" alt="etc/shadowsocks-libev/ 目录"></p>
+<p>双击进行编辑。注意第一行的 Servier 后面需要修改为下图中的 [“0.0.0.0”]，其余的默认即可：</p>
+<p><img src="https://s2.loli.net/2023/05/25/BwvGNM43E6TtuP1.png" alt="编辑 config.json 文件">编辑 config.json 文件</p>
+<p>***为什么要修改成 [“0.0.0.0”]*<em>？因为这个配置是允许特定 IP 访问当前服务器。既然这个服务器需要做成节点，那么就需要放开所有IP 段。那么就是 “0.0.0.0”。</em></p>
+<p>记录好上图中提示的信息，并且 Ctrl+S 保存（或者菜单中选择保存）就可以。</p>
+<p>因为部署 Vultr 服务器，默认只开了 22 端口。而我们现在用的是 8388 端口，所以需要将 8388 端口打开。</p>
+<p><em><strong>重要</strong>：端口号是可以自行定义的。但是定义之后，记得要在</em><em>防火墙中打开端口<strong>。并且</strong>客户端中也需要同步修改**！</em></p>
+<p>首先用下面命令查询下端口状态：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw status</span><br></pre></td></tr></table></figure>
+
+<p>会看到目前只有 22 端口开启：</p>
+<p><img src="https://s2.loli.net/2023/05/25/vOS1zoW9GyZPn5N.png" alt="目前只开启了 22 端口">目前只开启了 22 端口</p>
+<p>然后使用 allow 命令打开 8388 端口：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw allow 8388</span><br></pre></td></tr></table></figure>
+
+<p>再次通过 status 命令查看端口发现 8388 已经打开：</p>
+<p><img src="https://s2.loli.net/2023/05/25/I5yXDQFf6Ma8YPo.png" alt="打开了 8388 端口">8388 端口已打开</p>
+<p>运行 restart 重启 SS 服务，并通过 status 查看状态：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart shadowsocks-libev.service</span><br><span class="line"></span><br><span class="line">systemctl status shadowsocks-libev.service</span><br></pre></td></tr></table></figure>
+
+<p>到此，服务器端的配置就已经全部结束了。</p>
+<h2 id="配置客户端：-SS-客户端"><a href="#配置客户端：-SS-客户端" class="headerlink" title="配置客户端： SS 客户端"></a>配置客户端： SS 客户端</h2><p>你需要下载两个东西：</p>
+<ol>
+<li><em><a target="_blank" rel="noopener" href="https://u.pcloud.link/publink/show?code=XZngDMVZTvAQ354x2k56aAwLuQ56h0FokIdX">Shadowsocks-4.4.1.0</a></em> 下载之后解压缩到文件夹。</li>
+<li>还有一个是 <a target="_blank" rel="noopener" href="https://u.pcloud.link/publink/show?code=XZggDMVZAt2rOgNhiBYFQfuRhGM8Nf0JJiDX"><em>v2ray-plugin-windows-amd64-v1.3.2.tar</em></a></li>
+</ol>
+<p>将 2 解压缩之后出来的 <em>v2ray-plugin_windows_amd64.exe</em> 放入到 1 解压缩之后的文件夹中，如下：</p>
+<p><img src="https://s2.loli.net/2023/05/25/exYulcpNHR2CLZk.png" alt="将 v2ray-plugin_windows_amd64.exe 放入 SS 客户端目录">将 v2ray-plugin_windows_amd64.exe 放入 SS 客户端目录</p>
+<p>双击 <em>Shadowsocks.exe</em> 启动 SS 客户端，并按照下图填写参数：</p>
+<p><img src="https://s2.loli.net/2023/05/25/xWD2IrfUaV4pRYM.png" alt="SS 客户端参数填写"></p>
+<p>SS 客户端参数填写，注意插件程序名称以及插件选项</p>
+<p>服务器地址、端口、密码、加密方式和 <em>config.json</em> 的一样。插件程序（就是你放入文件夹的文件名称）、以及插件选项 “server” 注意填写正确。</p>
+<p>然后右击电脑右下角小飞机图标，选择 PAC 模式（推荐）、或者全局模式。就可以合理的科学上网了！</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>以上，自建梯子 Vultr + ShadowSocks(SS) 完整的过程就算结束了。这个教程看起来很长，但是实际操作只需要 10 分钟就可以完成。</p>
+<p>记得学习完之后，自行删除服务哦。我演示只是学习技术，不违反地区法律规定。同时演示中的服务器也不用测试，就在我打这段文字的同时，我已经将服务器删除了。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://105s.top">admin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://105s.top/posts/66426e16.html">https://105s.top/posts/66426e16.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://105s.top" target="_blank">105s.top-个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Vultr-ShadowSocks%E6%95%99%E7%A8%8B-%E6%A2%AF%E5%AD%90%E6%90%AD%E5%BB%BA%E8%84%9A%E6%9C%AC-ssr%E6%90%AD%E5%BB%BA-%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/">Vultr,ShadowSocks教程,梯子搭建脚本,ssr搭建,科学上网</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/05/25/5ZREoAKglSnNkC3.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/posts/4a17b156.html" title="Hello World"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Hello World</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">admin</div><div class="author-info__description">一个分享技术学习经验、技术学习资料、网站源码、建站教程、国外vps推荐、vpn搭建教程的网站</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="iconfont icon-github-fill"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%E3%80%81%E6%B3%A8%E5%86%8CVultr%E5%B9%B6%E8%B4%AD%E4%B9%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">第一步、注册Vultr并购买服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%E3%80%81%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC%E6%90%AD%E5%BB%BAss-x2F-ssr"><span class="toc-text">第二步、一键脚本搭建ss&#x2F;ssr</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E5%AE%A2%E6%88%B7%E7%AB%AF%EF%BC%9A-SS-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-text">配置客户端： SS 客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-text">结语</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/66426e16.html" title="如何在Vultr上一键脚本搭建ShadowSocks/搭建SSR教程实现科学上网？"><img src="https://s2.loli.net/2023/05/25/5ZREoAKglSnNkC3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="如何在Vultr上一键脚本搭建ShadowSocks/搭建SSR教程实现科学上网？"/></a><div class="content"><a class="title" href="/posts/66426e16.html" title="如何在Vultr上一键脚本搭建ShadowSocks/搭建SSR教程实现科学上网？">如何在Vultr上一键脚本搭建ShadowSocks/搭建SSR教程实现科学上网？</a><time datetime="2023-05-24T23:48:04.724Z" title="发表于 2023-05-25 07:48:04">2023-05-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/4a17b156.html" title="Hello World"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/posts/4a17b156.html" title="Hello World">Hello World</a><time datetime="2023-05-22T22:42:32.885Z" title="发表于 2023-05-23 06:42:32">2023-05-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By admin</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
