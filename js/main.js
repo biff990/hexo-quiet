@@ -501,7 +501,7 @@ document.addEventListener('DOMContentLoaded', function () {
       $body.classList.add('read-mode')
       const newEle = document.createElement('button')
       newEle.type = 'button'
-      newEle.className = 'fas fa-sign-out-alt exit-readmode'
+      newEle.className = 'iconfont icon-tuichu1-copy'
       $body.appendChild(newEle)
 
       const clickFn = () => {
